@@ -4,6 +4,7 @@
 
 
 int CreateContext(void);
+int DestroyContext(void);
 void MakeCurrent(void);
 void SwapBuffers(void);
 

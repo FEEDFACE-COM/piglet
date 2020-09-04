@@ -41,3 +41,11 @@ func GetProcAddress(name string) unsafe.Pointer {
     defer C.free(unsafe.Pointer(cname))
     return C.GetProcAddress(cname)    
 }
+
+func DestroyContext() error {
+    err := int(C.DestroyContext())
+    if err != 0 {
+        return errors.New("fail to destroy context!!")
+    }
+    return nil
+}

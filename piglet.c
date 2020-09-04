@@ -52,6 +52,9 @@ static EGLDisplay display;
 static EGLContext context;
 static EGLSurface surface;
 
+static DISPMANX_ELEMENT_HANDLE_T dispman_element;
+static DISPMANX_DISPLAY_HANDLE_T dispman_display;
+
 
 int GetDisplayWidth()  { return (int) width;  }
 int GetDisplayHeight() { return (int) height; }
@@ -63,11 +66,9 @@ CreateContext()
     // see /opt/vc/src/hello_pi/hello_triangle/triangle.c 
     
     
-    static EGL_DISPMANX_WINDOW_T       native_window;
+    static EGL_DISPMANX_WINDOW_T     native_window;
+    static DISPMANX_UPDATE_HANDLE_T  dispman_update;
 
-    DISPMANX_ELEMENT_HANDLE_T   dispman_element;
-    DISPMANX_DISPLAY_HANDLE_T   dispman_display;
-    DISPMANX_UPDATE_HANDLE_T    dispman_update;
     
     VC_RECT_T src_rect;
     VC_RECT_T dst_rect;
@@ -226,12 +227,55 @@ GetProcAddress(const char *name)
         return 0x0;
     }
     void *ret = dlsym(handle,name);
-//    PIGLET_PRINT("proc %s at %p",name,ret);
+//    PIGLET_PRINT("GetProcAddress %s at %p",name,ret);
     dlclose(handle);
     return ret;
 }
 
 
+int
+DestroyContext()
+{
+    EGLBoolean res;
+    int32_t err;
+    static DISPMANX_UPDATE_HANDLE_T  dispman_update;
+
+
+    eglDestroySurface(display, surface);
+    PIGLET_CHECK("eglDestroySurface");
+
+    dispman_update = vc_dispmanx_update_start(0);
+    err = vc_dispmanx_element_remove(dispman_update, dispman_element);
+    if ( err != 0 ) {
+        PIGLET_ERROR("fail to remove element from display!!");
+        return -1;
+    }
+
+    vc_dispmanx_update_submit_sync(dispman_update);
+    err = vc_dispmanx_display_close(dispman_display);
+    if ( err != 0 ) {
+        PIGLET_ERROR("fail to close display!!");
+        return -1;
+    }
+
+
+    res = eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+    PIGLET_CHECK("eglMakeCurrent");
+    if ( res == EGL_FALSE ) {
+        PIGLET_ERROR("fail to make current!!");
+        return -1;
+    }
+
+    eglDestroyContext(display, context);
+    PIGLET_CHECK("eglMakeCurrent");
+
+    eglTerminate(display);
+    PIGLET_CHECK("eglTerminate");
+
+    PIGLET_PRINT("terminated.");
+    return 0;
+
+}
 
 
 

@@ -8,6 +8,7 @@
 #include "piglet.h"
 
 
+#undef PIGLET_DEBUG
 
 
 #ifdef PIGLET_DEBUG
@@ -193,7 +194,7 @@ CreateContext()
     PIGLET_PRINT("version %s %s",glGetString(GL_VERSION),glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 
-//    PIGLET_PRINT("init: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
+//    PIGLET_PRINT("CreateContext: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
 
     return 0;    
     
@@ -203,7 +204,7 @@ CreateContext()
 void
 MakeCurrent() 
 {
-//    PIGLET_PRINT("make: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
+//    PIGLET_PRINT("MakeCurrent: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
     eglMakeCurrent(display, surface, surface, context);
     PIGLET_CHECK("eglMakeCurrent");
 }
@@ -212,7 +213,7 @@ MakeCurrent()
 void
 SwapBuffers()
 {
-//    PIGLET_PRINT("swap: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
+//    PIGLET_PRINT("SwapBuffers: display %d at %p surface %d at %p context %d at %p",display,&display,surface,&surface,context,&context);
     eglSwapBuffers(display, surface);
     PIGLET_CHECK("eglSwapBuffers");
 }

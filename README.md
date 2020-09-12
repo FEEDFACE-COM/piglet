@@ -3,7 +3,7 @@
 
 The _PiGLEt_ Go module provides bindings to the native OpenGLES and EGL libraries available for Raspberry Pi. 
 
-Specifically, PiGLEt provides functions to create an OpenGL context using the native Broadcom drivers `libbcm_host.so` and `libbrcmEGL.so` in `/opt/vc/lib/`. It also provides Go function wrappers for the `libbrcmGLESv2.so` OpenGLES2 library. These libraries make it possible to run OpenGL programs from the command line without requiring the X Window System. OpenGLES programs drawing within a PiGLEt context wll be rendered to the display attached to the HDMI port of the Raspberry Pi.
+Specifically, PiGLEt provides functions to create an OpenGL context using the native Broadcom drivers `libbcm_host.so` and `libbrcmEGL.so` in `/opt/vc/lib/`. It also provides Go function wrappers for the `libbrcmGLESv2.so` OpenGLES2 library. These libraries make it possible to run OpenGL programs from the command line without requiring the X Window System. OpenGLES programs drawing within a PiGLEt context will be rendered to the display attached to the HDMI port of the Raspberry Pi.
 
 
 ## Requirements

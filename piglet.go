@@ -12,6 +12,7 @@ package piglet
 import "C"
 import "unsafe"
 import "errors"
+import "github.com/FEEDFACE-COM/piglet/gles2"
 
 
 
@@ -59,3 +60,14 @@ func DestroyContext() error {
 	}
 	return nil
 }
+
+
+func Loop() bool {
+	return true
+}
+
+func ErrorString(e uint32) string {
+	return gles2.ErrorString(e)
+}
+
+

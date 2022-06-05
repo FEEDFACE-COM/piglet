@@ -6,7 +6,7 @@
 package piglet
 
 // #cgo CFLAGS:  -I/opt/vc/include
-// #cgo LDFLAGS: -L/opt/vc/lib -ldl -lbcm_host -lbrcmGLESv2 -lbrcmEGL
+// #cgo LDFLAGS: -L/opt/vc/lib -ldl -lbcm_host -lbrcmEGL -lbrcmGLESv2
 // #include <stdlib.h>
 // #include "piglet.h"
 import "C"
